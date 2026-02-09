@@ -7,7 +7,7 @@
     },
     "files": [
         "dist/**/*",
-        "native/build/x64/Release/**/*"
+        "build/x64/Release/**/*"
     ],
     "asarUnpack": [
         "native/**/*"
