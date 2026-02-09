@@ -58,7 +58,7 @@ npm install
 ├── package.json           # Node.js dependencies and npm scripts
 ├── tsconfig.json          # TypeScript config (renderer process)
 ├── tsconfig.main.json     # TypeScript config (main process)
-└── webpack.config.js      # Webpack bundler configuration
+└── webpack.config.ts      # Webpack bundler configuration
 ```
 
 ## Architecture
