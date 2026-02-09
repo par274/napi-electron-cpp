@@ -4,14 +4,22 @@ This is a minimal "Hello World" example demonstrating how to integrate C++ nativ
 
 ## Prerequisites
 
-- Node.js 18+
+- Node.js 20+
 - CMake 3.15+
 - C++ compiler (MSVC on Windows, GCC/Clang on Linux/macOS)
 - Ninja build system (for IntelliSense)
+- Git
 
 ## Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/par274/napi-electron-cpp.git
+
+# Navigate to the project directory
+cd napi-electron-cpp
+
+# Install dependencies
 npm install
 ```
 
