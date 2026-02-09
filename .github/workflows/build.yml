@@ -46,11 +46,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y cmake ninja-build build-essential libx11-dev libxkbfile-dev libsecret-1-dev
 
-      - name: Install system dependencies (macOS)
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew install cmake ninja
-
       - name: Install system dependencies (Windows)
         if: matrix.os == 'windows-latest'
         run: |
