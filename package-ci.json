@@ -1,0 +1,48 @@
+{
+    "appId": "com.example.napiapp",
+    "productName": "NapiElectronCpp",
+    "copyright": "Copyright © 2026 par274",
+    "directories": {
+        "output": "release"
+    },
+    "files": [
+        "dist/**/*",
+        "native/build/x64/Release/**/*"
+    ],
+    "asarUnpack": [
+        "native/**/*"
+    ],
+    "compression": "maximum",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "win": {
+        "target": [
+            {
+                "target": "zip",
+                "arch": [
+                    "x64"
+                ]
+            }
+        ]
+    },
+    "mac": {
+        "target": [
+            {
+                "target": "zip",
+                "arch": [
+                    "x64",
+                    "arm64"
+                ]
+            }
+        ]
+    },
+    "linux": {
+        "target": [
+            {
+                "target": "zip",
+                "arch": [
+                    "x64"
+                ]
+            }
+        ]
+    }
+}

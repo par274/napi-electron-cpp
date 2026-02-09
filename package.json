@@ -1,0 +1,140 @@
+{
+    "name": "napi-electron-cpp",
+    "version": "1.0.0",
+    "description": "A simple Electron app with C++ native addon",
+    "main": "dist/main.js",
+    "scripts": {
+        "build:native": "cmake-js configure -G Ninja -O build/ninja64 && cmake-js compile --runtime=electron --runtime-version=28.0.0 --arch=x64 -O build/x64",
+        "build:main": "tsc --project tsconfig.main.json",
+        "build:renderer": "webpack --mode production",
+        "build:app": "npm run build:main && npm run build:renderer",
+        "build": "npm run build:native && npm run build:app",
+        "start": "npm run build && electron .",
+        "dist:portable": "npm run build && electron-builder --dir",
+        "dist:installer": "npm run build && electron-builder --pd",
+        "dist:ci": "npm run build && electron-builder --config package-ci.json",
+        "clean": "rimraf dist release build"
+    },
+    "keywords": [
+        "electron",
+        "react",
+        "typescript",
+        "cpp",
+        "native-addon",
+        "napi",
+        "cmake",
+        "desktop-app",
+        "cross-platform"
+    ],
+    "author": "https://github.com/par274",
+    "license": "MIT",
+    "homepage": "https://github.com/par274/napi-electron-cpp",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/par274/napi-electron-cpp.git"
+    },
+    "bugs": {
+        "url": "https://github.com/par274/napi-electron-cpp/issues"
+    },
+    "engines": {
+        "node": ">=20.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.10.0",
+        "@types/react": "^19.0.0",
+        "@types/react-dom": "^19.0.0",
+        "cmake-js": "^7.2.1",
+        "electron": "^28.0.0",
+        "electron-builder": "^24.9.1",
+        "html-webpack-plugin": "^5.6.0",
+        "ts-loader": "^9.5.1",
+        "typescript": "^5.3.3",
+        "webpack": "^5.89.0",
+        "webpack-cli": "^5.1.4"
+    },
+    "dependencies": {
+        "node-addon-api": "^7.1.0",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "rimraf": "^6.1.2"
+    },
+    "build": {
+        "appId": "com.example.napiapp",
+        "productName": "NapiElectronCpp",
+        "copyright": "Copyright © 2026 par274",
+        "directories": {
+            "output": "release"
+        },
+        "files": [
+            "dist/**/*",
+            "native/build/x64/Release/**/*"
+        ],
+        "asarUnpack": [
+            "native/**/*"
+        ],
+        "compression": "maximum",
+        "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+        "win": {
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "portable",
+                    "arch": [
+                        "x64"
+                    ]
+                }
+            ],
+            "publisherName": "par274",
+            "verifyUpdateCodeSignature": false
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true,
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true,
+            "shortcutName": "NapiElectronCpp"
+        },
+        "mac": {
+            "target": [
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "x64",
+                        "arm64"
+                    ]
+                }
+            ],
+            "category": "public.app-category.developer-tools"
+        },
+        "dmg": {
+            "contents": [
+                {
+                    "x": 130,
+                    "y": 220
+                },
+                {
+                    "x": 410,
+                    "y": 220,
+                    "type": "link",
+                    "path": "/Applications"
+                }
+            ]
+        },
+        "linux": {
+            "target": [
+                {
+                    "target": "AppImage",
+                    "arch": [
+                        "x64"
+                    ]
+                }
+            ],
+            "category": "Development"
+        }
+    }
+}

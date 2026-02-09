@@ -1,0 +1,97 @@
+name: Build and Release
+
+on:
+  push:
+    branches: ["**"]
+    paths-ignore:
+      - "**/*.md"
+
+  pull_request:
+    branches: ["main"]
+    paths-ignore:
+      - "**/*.md"
+
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'push' }}
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        node-version: [20.x]
+      fail-fast: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install system dependencies (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build build-essential libx11-dev libxkbfile-dev libsecret-1-dev
+
+      - name: Install system dependencies (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install cmake ninja
+
+      - name: Install system dependencies (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          choco install cmake ninja visualstudio2022buildtools visualstudio2022-workload-vctools -y
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build native addon
+        run: npm run build:native
+        env:
+          CMAKE_BUILD_PARALLEL_LEVEL: 4
+
+      - name: Build application
+        run: npm run build:app
+
+      - name: Build distributables (zip only for CI)
+        run: npm run dist:ci
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Windows zip
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: NapiElectronCpp-Windows
+          path: release/*.zip
+          if-no-files-found: error
+
+      - name: Upload Linux zip
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: NapiElectronCpp-Linux
+          path: release/*.zip
+          if-no-files-found: error
+
+      - name: Upload macOS zip
+        if: matrix.os == 'macos-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: NapiElectronCpp-macOS
+          path: release/*.zip
+          if-no-files-found: error

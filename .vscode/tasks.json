@@ -1,0 +1,151 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Native (Ninja + Electron)",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "build:native"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Build App (TypeScript + Webpack)",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "build:app"
+            ],
+            "group": "build",
+            "problemMatcher": [
+                "$tsc",
+                "$webpack"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Build All",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "build"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Start Electron",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "start"
+            ],
+            "dependsOn": [
+                "Build All"
+            ],
+            "group": "test",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Build Portable",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "dist:portable"
+            ],
+            "dependsOn": [
+                "Build All"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Build Installer",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "dist:installer"
+            ],
+            "dependsOn": [
+                "Build All"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Build CI (Zip)",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "dist:ci"
+            ],
+            "dependsOn": [
+                "Build All"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Clean Build Folders",
+            "type": "shell",
+            "command": "rm",
+            "args": [
+                "-rf",
+                "build",
+                "dist",
+                "release"
+            ],
+            "windows": {
+                "command": "cmd",
+                "args": [
+                    "/c",
+                    "rmdir /s /q build dist release 2>nul || echo Done"
+                ]
+            },
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        }
+    ]
+}
