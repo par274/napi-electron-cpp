@@ -17,18 +17,15 @@
             }
         },
         {
-            "label": "Build App (TypeScript + Webpack)",
+            "label": "Build App (Vite)",
             "type": "shell",
             "command": "npm",
             "args": [
                 "run",
-                "build:app"
+                "build"
             ],
             "group": "build",
-            "problemMatcher": [
-                "$tsc",
-                "$webpack"
-            ],
+            "problemMatcher": [],
             "presentation": {
                 "reveal": "always",
                 "panel": "new"
@@ -53,14 +50,26 @@
             }
         },
         {
+            "label": "Dev Server",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "dev"
+            ],
+            "group": "test",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
             "label": "Start Electron",
             "type": "shell",
             "command": "npm",
             "args": [
                 "start"
-            ],
-            "dependsOn": [
-                "Build All"
             ],
             "group": "test",
             "problemMatcher": [],

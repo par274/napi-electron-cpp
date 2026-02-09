@@ -60,7 +60,7 @@ jobs:
           CMAKE_BUILD_PARALLEL_LEVEL: 4
 
       - name: Build application
-        run: npm run build:app
+        run: npm run build
 
       - name: Build distributables (zip only for CI)
         run: npm run dist:ci

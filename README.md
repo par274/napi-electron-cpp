@@ -25,19 +25,19 @@ npm install
 
 ## Scripts
 
-| Command | VSCode Task | Description |
-|---------|-------------|-------------|
-| `npm run build:native` | `Build Native (Ninja + Electron)` | Build C++ native addon with CMake |
-| `npm run build:app` | `Build App (TypeScript + Webpack)` | Build main and renderer |
-| `npm run build` | `Build All` | Build native addon and app |
-| `npm start` | `Start Electron` | Build and run the application |
-| `npm run dist:portable` | `Build Portable` | Create portable distribution |
-| `npm run dist:installer` | `Build Installer` | Create installer package |
-| `npm run dist:ci` | `Build and compress to zip` | Create zip package |
-| `npm run clean` | `Clean Build Folders` | Remove all build artifacts |
+| Command | Description |
+|---------|-------------|
+| `npm run build:native` | Build C++ native addon with CMake |
+| `npm run dev` | Start Vite development server |
+| `npm run build` | Build native addon and Vite app |
+| `npm run preview` | Preview production build locally |
+| `npm start` | Build and run the Electron application |
+| `npm run dist:portable` | Create portable distribution |
+| `npm run dist:installer` | Create installer package |
+| `npm run dist:ci` | Create CI distribution (zip) |
+| `npm run clean` | Remove all build artifacts |
 
 **How to Run:**
-- **CLI:** Use the `npm run` commands listed above in your terminal
 - **VSCode:** Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS), type "Run Task" or `Terminal > Run Task...` and select any task from the list.
 
 ## Project Structure
@@ -54,11 +54,7 @@ npm install
 │   ├── renderer.tsx       # React renderer process
 │   └── index.html         # HTML entry point
 ├── CMakeLists.txt         # CMake configuration for native addon
-├── LICENSE.md             # MIT License
-├── package.json           # Node.js dependencies and npm scripts
-├── tsconfig.json          # TypeScript config (renderer process)
-├── tsconfig.main.json     # TypeScript config (main process)
-└── webpack.config.ts      # Webpack bundler configuration
+├── vite.config.ts         # Vite bundler configuration
 ```
 
 ## Architecture
