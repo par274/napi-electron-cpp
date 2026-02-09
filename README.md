@@ -35,17 +35,22 @@ npm install
 ## Project Structure
 
 ```
+├── config/
+│   └── (electron builder configuration scripts)
 ├── native/
-│   └── hello.cpp          # C++ native addon source
+│   └── hello.cpp          # C++ native addon source (N-API)
+├── release/               # Release builds
 ├── src/
-│   ├── main.ts            # Electron main process
+│   ├── main.ts            # Electron main process entry
 │   ├── preload.ts         # Preload script for secure IPC
 │   ├── renderer.tsx       # React renderer process
 │   └── index.html         # HTML entry point
-├── CMakeLists.txt         # CMake configuration
-├── package.json           # Dependencies and scripts
-├── tsconfig.json          # TypeScript config (renderer)
-└── tsconfig.main.json     # TypeScript config (main)
+├── CMakeLists.txt         # CMake configuration for native addon
+├── LICENSE.md             # MIT License
+├── package.json           # Node.js dependencies and npm scripts
+├── tsconfig.json          # TypeScript config (renderer process)
+├── tsconfig.main.json     # TypeScript config (main process)
+└── webpack.config.js      # Webpack bundler configuration
 ```
 
 ## Architecture
