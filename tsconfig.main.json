@@ -1,8 +1,10 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
+        "module": "commonjs",
         "outDir": "./dist",
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "noEmit": false
     },
     "include": [
         "src/main.ts",

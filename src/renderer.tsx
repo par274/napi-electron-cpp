@@ -1,4 +1,5 @@
 import appMeta from '../config/app.meta';
+import './styles.css';
 
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -21,19 +22,6 @@ const documentMeta = () => {
 
     // Set title
     document.title = appMeta.title;
-
-    // Inject global styles
-    const style = document.createElement('style');
-    style.textContent = `
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background-color: #212121;
-            color: #f2f2f2;
-            min-height: 100vh;
-        }
-    `;
-    document.head.appendChild(style);
 };
 
 const App: React.FC = () => {
@@ -41,6 +29,10 @@ const App: React.FC = () => {
 
     // Calls C++ function when component mounts
     useEffect(() => {
+        if (!window.electronAPI) {
+            setMessage('Error: Electron API not available');
+            return;
+        }
         window.electronAPI.sayHello().then(response => {
             if (response.success) {
                 setMessage(response.result!);
@@ -51,13 +43,13 @@ const App: React.FC = () => {
     }, []);
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', fontSize: '24px' }}>
+        <div className="app-container">
             {message}
         </div>
     );
 };
 
-// Inject meta tags and styles before mounting
+// Inject meta tags before mounting
 documentMeta();
 
 // Mounts React app to root element

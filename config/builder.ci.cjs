@@ -1,4 +1,4 @@
-const main = require("./builder.main");
+const main = require("./builder.main.cjs");
 
 module.exports = {
     ...main,

@@ -1,11 +1,11 @@
-const main = require("./builder.main");
-const meta = require("./app.meta");
+const appMeta = require("./app.meta.cjs");
+const main = require("./builder.main.cjs");
 
 module.exports = {
     ...main,
 
     win: {
-        publisherName: meta.company,
+        publisherName: appMeta.company,
         verifyUpdateCodeSignature: false,
         target: [
             { target: "nsis", arch: ["x64"] },
@@ -18,7 +18,7 @@ module.exports = {
         allowToChangeInstallationDirectory: true,
         createDesktopShortcut: true,
         createStartMenuShortcut: true,
-        shortcutName: meta.productName,
+        shortcutName: appMeta.productName,
     },
 
     mac: {

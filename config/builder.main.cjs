@@ -1,9 +1,9 @@
-const meta = require("./app.meta");
+const appMeta = require("./app.meta.cjs");
 
 module.exports = {
-    appId: meta.appId,
-    productName: meta.productName,
-    copyright: meta.copyright,
+    appId: appMeta.appId,
+    productName: appMeta.productName,
+    copyright: appMeta.copyright,
 
     directories: {
         output: "release",
