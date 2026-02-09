@@ -1,7 +1,8 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import type { Configuration } from 'webpack';
 
-module.exports = {
+const config: Configuration = {
     mode: 'production',
     entry: {
         preload: './src/preload.ts',
@@ -30,5 +31,7 @@ module.exports = {
             chunks: ['renderer'],
         }),
     ],
-    target: 'electron-renderer', // Build for Electron renderer process
+    target: 'electron-renderer',
 };
+
+export default config;
