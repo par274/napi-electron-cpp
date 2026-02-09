@@ -30,5 +30,5 @@ module.exports = {
             chunks: ['renderer'],
         }),
     ],
-    target: 'electron-renderer', // Electron renderer süreci için build
+    target: 'electron-renderer', // Build for Electron renderer process
 };
