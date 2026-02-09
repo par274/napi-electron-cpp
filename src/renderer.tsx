@@ -1,3 +1,5 @@
+import appMeta from '../config/app.meta';
+
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -9,6 +11,30 @@ declare global {
         };
     }
 }
+
+const documentMeta = () => {
+    // Set viewport meta
+    const viewportMeta = document.createElement('meta');
+    viewportMeta.name = 'viewport';
+    viewportMeta.content = 'width=device-width, initial-scale=1.0';
+    document.head.appendChild(viewportMeta);
+
+    // Set title
+    document.title = appMeta.title;
+
+    // Inject global styles
+    const style = document.createElement('style');
+    style.textContent = `
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #212121;
+            color: #f2f2f2;
+            min-height: 100vh;
+        }
+    `;
+    document.head.appendChild(style);
+};
 
 const App: React.FC = () => {
     const [message, setMessage] = useState<string>('');
@@ -30,6 +56,9 @@ const App: React.FC = () => {
         </div>
     );
 };
+
+// Inject meta tags and styles before mounting
+documentMeta();
 
 // Mounts React app to root element
 const rootElement = document.getElementById('root');
