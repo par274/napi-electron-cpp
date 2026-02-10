@@ -1,4 +1,4 @@
-#include <napi.h>
+#include "hello.h"
 
 // Exports C++ function to Node.js
 Napi::String SayHello(const Napi::CallbackInfo& info) {
