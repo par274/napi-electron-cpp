@@ -26,7 +26,7 @@ export default defineConfig({
                 },
             },
             {
-                // Preload script entry file
+                // Preload process entry file
                 entry: path.join(__dirname, 'src/preload.ts'),
                 onstart({ reload }) {
                     reload();
@@ -36,8 +36,19 @@ export default defineConfig({
                         sourcemap: true,
                         minify: false,
                         outDir: path.join(__dirname, 'dist'),
+                        lib: {
+                            entry: path.join(__dirname, 'src/preload.ts'),
+                            formats: ['cjs'],
+                            fileName: () => 'preload.js'
+                        },
                         rollupOptions: {
                             external: ['electron'],
+                            output: {
+                                format: 'cjs',
+                                entryFileNames: 'preload.js',
+                                esModule: false,
+                                exports: 'auto'
+                            }
                         }
                     },
                 },

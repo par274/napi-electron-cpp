@@ -42,6 +42,8 @@ npm install
 
 ## Project Structure
 
+The project structure was developed based on the principle of modularity.
+
 ```
 ├── config/
 │   └── (electron builder configuration scripts)
@@ -51,9 +53,21 @@ npm install
 ├── src/
 │   ├── main.ts            # Electron main process entry
 │   ├── preload.ts         # Preload script for secure IPC
-│   ├── renderer.tsx       # React renderer process
-│   └── index.html         # HTML entry point
+│   ├── addon.ts           # Native addon loader with path resolution
+│   ├── ipc.ts             # IPC channel definitions
+│   ├── index.html         # HTML entry point
+│   ├── renderer/          # UI layer (React components & styles)
+│   │   ├── index.tsx      # React renderer entry point
+│   │   └── styles/
+│   │       └── app.css    # Application styles
+│   ├── functions/         # Business logic layer (IPC handlers)
+│   │   └── sayHello.ts    # IPC handler for native addon
+│   ├── helpers/           # Utility layer (shared helpers)
+│   │   └── paths.ts       # Path utilities for ES modules
+│   └── types/             # Type definitions layer
+│       └── index.d.ts     # TypeScript type definitions
 ├── CMakeLists.txt         # CMake configuration for native addon
+├── tsconfig.ts            # configuration for TypeScript
 ├── vite.config.ts         # Vite bundler configuration
 ```
 
@@ -61,9 +75,16 @@ npm install
 
 The application consists of three main parts:
 
-1. **Native Layer** (`native/`): C++ code using N-API for Node.js bindings
-2. **Main Process** (`src/main.ts`): Electron main process with IPC handlers
-3. **Renderer Process** (`src/renderer.tsx`): React-based UI with secure preload script
+1. **Native Layer** (`native/`): C++ code using N-API for Node.js bindings.
+2. **Main Process** (`src/main.ts`): Electron main process with IPC handlers and native addon loading.
+3. **Renderer Process** (`src/renderer/`): React-based UI with secure preload script.
+
+### Key Components
+
+- **`src/addon.ts`**: Handles dynamic loading of the native addon from multiple possible paths.
+- **`src/ipc.ts`**: Centralized IPC channel name definitions.
+- **`src/functions/`**: Business logic handlers for IPC calls.
+- **`src/helpers/paths.ts`**: ES module-compatible path utilities.
 
 ## Native Addon API
 
@@ -74,6 +95,18 @@ sayHello(): string
 ```
 
 Returns `"Hello World from C++!"`
+
+### IPC Response Format
+
+The main process wraps native addon calls with standardized responses:
+
+```typescript
+interface SayHelloResponse {
+  success: boolean;
+  result?: string;
+  error?: string;
+}
+```
 
 ## References
 

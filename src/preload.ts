@@ -1,6 +1,8 @@
-const { contextBridge, ipcRenderer } = require('electron');
+import { IPC } from "./ipc";
+import type { SayHelloResponse } from "./types";
 
-// Provides secure access from renderer to main process
-contextBridge.exposeInMainWorld('electronAPI', {
-    sayHello: () => ipcRenderer.invoke('sayHello')
+import { contextBridge, ipcRenderer } from "electron";
+
+contextBridge.exposeInMainWorld("electronAPI", {
+    sayHello: (): Promise<SayHelloResponse> => ipcRenderer.invoke(IPC.SAY_HELLO),
 });
