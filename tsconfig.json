@@ -16,7 +16,7 @@
         "outDir": "./dist",
         "allowSyntheticDefaultImports": true,
         "isolatedModules": true,
-        "noEmit": true
+        "noEmit": false
     },
     "include": [
         "src/**/*"
