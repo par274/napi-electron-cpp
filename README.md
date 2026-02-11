@@ -47,7 +47,7 @@ The project structure was developed based on the principle of modularity.
 ```
 ├── config/
 │   └── (electron builder configuration scripts)
-├── native/
+├── src-cpp/
 │   └── hello.cpp          # C++ native addon source (N-API)
 ├── release/               # Release builds
 ├── src/
@@ -75,7 +75,7 @@ The project structure was developed based on the principle of modularity.
 
 The application consists of three main parts:
 
-1. **Native Layer** (`native/`): C++ code using N-API for Node.js bindings.
+1. **Native Layer** (`src-cpp/`): C++ code using N-API for Node.js bindings.
 2. **Main Process** (`src/main.ts`): Electron main process with IPC handlers and native addon loading.
 3. **Renderer Process** (`src/renderer/`): React-based UI with secure preload script.
 

@@ -14,7 +14,7 @@ module.exports = {
         "build/x64/Release/**/*",
     ],
 
-    asarUnpack: ["native/**/*"],
+    asarUnpack: ["src-cpp/**/*"],
 
     compression: "maximum",
     artifactName: "${productName}-${version}-${os}-${arch}.${ext}",

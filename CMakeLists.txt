@@ -17,7 +17,7 @@ string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 include_directories(${CMAKE_JS_INC})
 include_directories(${NODE_ADDON_API_DIR})
 
-file(GLOB SOURCE_FILES "native/hello.cpp")
+file(GLOB SOURCE_FILES "src-cpp/hello.cpp")
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${CMAKE_JS_SRC})
 
