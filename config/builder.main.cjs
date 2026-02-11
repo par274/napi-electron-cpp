@@ -11,7 +11,7 @@ module.exports = {
 
     files: [
         "dist/**/*",
-        "build/x64/Release/**/*",
+        "build/x64/Release/*.node",
     ],
 
     asarUnpack: ["src-cpp/**/*"],
