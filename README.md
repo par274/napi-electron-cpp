@@ -108,9 +108,10 @@ interface SayHelloResponse {
 }
 ```
 
-## References
+## Sources
 
-This project was inspired by the architecture of [electron-cpp](https://github.com/akab/electron-cpp), modernized with React 19, TypeScript, and cmake-js for a more streamlined native addon integration.
+- [Electron N-API documentation](https://www.electronjs.org/docs/latest/tutorial/native-code-and-electron): Official reference for integrating native (C/C++) code with Electron.
+- [electron-cpp](https://github.com/akab/electron-cpp): Used as architectural inspiration only.
 
 ## License
 
