@@ -16,23 +16,51 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'push' }}
 
 jobs:
+  prepare:
+    name: Prepare Workspace
+    runs-on: ubuntu-latest
+    outputs:
+      date: ${{ steps.set-vars.outputs.date }}
+      short-sha: ${{ steps.set-vars.outputs.short-sha }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set variables
+        id: set-vars
+        run: |
+          echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+          echo "short-sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
+
   build:
+    needs: prepare
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
-        node-version: [20.x]
+        include:
+          - os: windows-latest
+            platform: win64
+            arch: x64
+          - os: ubuntu-latest
+            platform: linux-x64
+            arch: x64
+          - os: macos-latest
+            platform: macos-x64
+            arch: x64
+          - os: macos-latest
+            platform: macos-arm64
+            arch: arm64
       fail-fast: false
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "20"
           cache: "npm"
 
       - name: Setup Python
@@ -55,7 +83,13 @@ jobs:
         run: npm ci
 
       - name: Build native addon
-        run: npm run build:native
+        shell: bash
+        run: |
+          if [ "${{ matrix.arch }}" = "arm64" ]; then
+            npm run build:native -- --arch=arm64
+          else
+            npm run build:native -- --arch=x64
+          fi
         env:
           CMAKE_BUILD_PARALLEL_LEVEL: 4
 
@@ -63,30 +97,19 @@ jobs:
         run: npm run build
 
       - name: Build distributables (zip only for CI)
-        run: npm run dist:ci
+        shell: bash
+        run: |
+          if [ "${{ matrix.arch }}" = "arm64" ]; then
+            npm run dist:ci -- --arm64
+          else
+            npm run dist:ci -- --x64
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Windows zip
-        if: matrix.os == 'windows-latest'
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: NapiElectronCpp-Windows
-          path: release/*.zip
-          if-no-files-found: error
-
-      - name: Upload Linux zip
-        if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v4
-        with:
-          name: NapiElectronCpp-Linux
-          path: release/*.zip
-          if-no-files-found: error
-
-      - name: Upload macOS zip
-        if: matrix.os == 'macos-latest'
-        uses: actions/upload-artifact@v4
-        with:
-          name: NapiElectronCpp-macOS
+          name: electroncpp-${{ matrix.platform }}-${{ needs.prepare.outputs.date }}-${{ needs.prepare.outputs.short-sha }}
           path: release/*.zip
           if-no-files-found: error
