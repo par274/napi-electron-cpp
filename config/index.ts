@@ -13,7 +13,7 @@ const mainConfig: Configuration = {
     files: [
         'dist/**/*',
         '!dist/config.cjs',
-        'build/x64/Release/*.node',
+        'build/cmake-js/Release/*.node'
     ],
 
     asarUnpack: ['src-cpp/**/*'],

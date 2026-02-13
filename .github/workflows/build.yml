@@ -85,24 +85,26 @@ jobs:
       - name: Build native addon
         shell: bash
         run: |
-          if [ "${{ matrix.arch }}" = "arm64" ]; then
-            npm run build:native -- --arch=arm64
-          else
-            npm run build:native -- --arch=x64
-          fi
+          ARCH="${{ matrix.arch }}"
+          npx cmake-js configure -G Ninja -O build/ninja
+          npx cmake-js compile --runtime=electron --runtime-version=28.0.0 --arch=${ARCH} -O build/${ARCH}
         env:
           CMAKE_BUILD_PARALLEL_LEVEL: 4
 
       - name: Build application
-        run: npm run build
+        run: npx vite build
 
       - name: Build distributables (zip only for CI)
         shell: bash
         run: |
           if [ "${{ matrix.arch }}" = "arm64" ]; then
-            npm run dist:ci -- --arm64
+            npx electron-builder --config dist/config.cjs --arm64 --mac zip
+          elif [ "${{ matrix.os }}" = "windows-latest" ]; then
+            npx electron-builder --config dist/config.cjs --x64 --win zip
+          elif [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+            npx electron-builder --config dist/config.cjs --x64 --linux zip
           else
-            npm run dist:ci -- --x64
+            npx electron-builder --config dist/config.cjs --x64 --mac zip
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

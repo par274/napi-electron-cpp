@@ -29,7 +29,7 @@
     ],
     "type": "module",
     "scripts": {
-        "build:native": "cmake-js configure -G Ninja -O build/ninja64 && cmake-js compile --runtime=electron --runtime-version=28.0.0 --arch=x64 -O build/x64",
+        "build:native": "cmake-js configure -G Ninja -O build/ninja && cmake-js compile --runtime=electron --runtime-version=28.0.0 -O build/cmake-js",
         "dev": "vite",
         "build": "npm run build:native && vite build",
         "preview": "vite preview",
