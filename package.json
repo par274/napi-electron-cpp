@@ -34,9 +34,9 @@
         "build": "npm run build:native && vite build",
         "preview": "vite preview",
         "start": "npm run build && electron .",
-        "dist:portable": "npm run build && electron-builder --config config/builder.local.cjs --dir",
-        "dist:installer": "npm run build && electron-builder --config config/builder.local.cjs",
-        "dist:ci": "npm run build && electron-builder --config config/builder.ci.cjs",
+        "dist:portable": "npm run build && electron-builder --config dist/config.cjs --dir",
+        "dist:installer": "npm run build && electron-builder --config dist/config.cjs",
+        "dist:ci": "npm run build && electron-builder --config dist/config.cjs",
         "clean": "rimraf dist release build"
     },
     "dependencies": {

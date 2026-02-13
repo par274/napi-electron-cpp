@@ -53,6 +53,30 @@ export default defineConfig({
                     },
                 },
             },
+            {
+                // Reproduce the electron-builder configuration file
+                entry: path.join(__dirname, 'config/index.ts'),
+                vite: {
+                    build: {
+                        sourcemap: false,
+                        minify: false,
+                        outDir: path.join(__dirname, 'dist'),
+                        lib: {
+                            entry: path.join(__dirname, 'config/index.ts'),
+                            formats: ['cjs'],
+                            fileName: () => 'config.cjs',
+                        },
+                        rollupOptions: {
+                            external: ['electron-builder'],
+                            output: {
+                                format: 'cjs',
+                                exports: 'default',
+                                esModule: false,
+                            }
+                        }
+                    },
+                },
+            },
         ]),
         renderer(),
     ],

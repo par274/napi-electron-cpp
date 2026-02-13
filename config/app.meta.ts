@@ -1,4 +1,12 @@
-const appMeta = {
+interface AppMeta {
+    appId: string;
+    productName: string;
+    copyright: string;
+    company: string;
+    title: string;
+}
+
+const appMeta: AppMeta = {
     appId: "com.example.napiapp",
     productName: "NapiElectronCpp",
     copyright: "Copyright © 2026 par274",
@@ -6,4 +14,4 @@ const appMeta = {
     title: "A simple Electron app with C++ native addon"
 };
 
-module.exports = appMeta;
+export default appMeta;
