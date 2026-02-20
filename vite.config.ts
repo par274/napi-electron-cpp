@@ -80,17 +80,12 @@ export default defineConfig({
         ]),
         renderer(),
     ],
-    root: __dirname,
+    root: path.join(__dirname, 'src'),
     base: './',
     build: {
         outDir: path.join(__dirname, 'dist'),
         emptyOutDir: true,
-        sourcemap: true,
-        rollupOptions: {
-            input: {
-                index: path.join(__dirname, 'src/index.html'),
-            },
-        },
+        sourcemap: true
     },
     resolve: {
         alias: {

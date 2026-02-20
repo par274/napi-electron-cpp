@@ -1,10 +1,9 @@
-import { __dirname } from './helpers/paths';
-import { loadNativeAddon, nativeAddon } from "./addon";
-import { handleSayHello } from "./functions/sayHello";
+import { loadNativeAddon, nativeAddon } from './addon';
+import { handleSayHello } from './functions/sayHello';
 
-import { app, BrowserWindow, ipcMain, dialog, Menu } from "electron";
-import path from "path";
-import { IPC } from "./ipc";
+import { app, BrowserWindow, ipcMain, dialog, Menu } from 'electron';
+import path from 'path';
+import { IPC } from './ipc';
 
 app.whenReady().then(async () => {
     const loaded = await loadNativeAddon();
@@ -17,10 +16,10 @@ app.whenReady().then(async () => {
     Menu.setApplicationMenu(null);
 
     const mainWindow = new BrowserWindow({
-        width: 1280,
-        height: 900,
+        frame: false,
+        fullscreen: true,
         webPreferences: {
-            preload: path.join(__dirname, "preload.js"),
+            preload: path.join(app.getAppPath(), "dist/preload.js"),
             contextIsolation: true,
             nodeIntegration: false,
         },
@@ -29,7 +28,7 @@ app.whenReady().then(async () => {
     // For debugging purposes
     // mainWindow.webContents.openDevTools();
 
-    mainWindow.loadFile(path.join(__dirname, "src/index.html"));
+    mainWindow.loadFile(path.join(app.getAppPath(), "dist/index.html"));
 });
 
 // IPC handlers

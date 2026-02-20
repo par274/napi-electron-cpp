@@ -1,7 +1,7 @@
 import { app } from 'electron';
 import fs from 'fs';
 
-import { __path, __dirname, __filename, require } from './helpers/paths';
+import { __path, __filename, require } from './helpers/paths';
 
 let nativeAddon: any = null;
 
@@ -9,14 +9,8 @@ export async function loadNativeAddon(): Promise<boolean> {
     const archFolder = process.arch === 'arm64' ? 'arm64' : 'x64';
 
     const possiblePaths = [
-        __path.join(__dirname, `../build/${archFolder}/Release/hello.node`),
-        __path.join(__dirname, `../build/cmake-js/Release/hello.node`),
-        __path.join(process.resourcesPath, `build/${archFolder}/Release/hello.node`),
-        __path.join(process.resourcesPath, `build/cmake-js/Release/hello.node`),
         __path.join(app.getAppPath(), `build/${archFolder}/Release/hello.node`),
         __path.join(app.getAppPath(), `build/cmake-js/Release/hello.node`),
-        __path.join(__dirname, `../../build/${archFolder}/Release/hello.node`),
-        __path.join(__dirname, `../../build/cmake-js/Release/hello.node`),
     ];
 
     for (const addonPath of possiblePaths) {
